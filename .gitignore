@@ -1,0 +1,8 @@
+# Compiled Python files
+*.pyc
+# 
+.idea/
+*.txt
+*.html
+*.png
+*.jpg
