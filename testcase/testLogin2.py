@@ -9,7 +9,7 @@ class TestLogin(mytest.Myunittest):
     def test1(self):
         """第一步"""
         self.dr.find_element_by_id('com.cubic.autohome:id/owner_main_RadioButton').click()
-        # self.assertEqual(1,2,"不相等")
+        self.assertEqual(1,2,"不相等")
         self.dr.find_element_by_id('com.autohome.main.me:id/owner_guest_login').click()
         self.dr.find_element_by_id('com.autohome.main.me:id/change_old_owner_login').click()
         self.dr.find_element_by_id('com.autohome.main.me:id/owner_login_input_usr').send_keys('18611740012')

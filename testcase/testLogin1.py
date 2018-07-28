@@ -1,6 +1,6 @@
 # -*-coding:utf-8-*-
 
-from uiapptest.app import mytest
+from app import mytest
 import unittest
 
 class TestLogin(mytest.Myunittest):

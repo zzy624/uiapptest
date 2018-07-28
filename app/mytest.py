@@ -9,7 +9,7 @@ class Myunittest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.dr = Driver()
-        cls.dr.implicitly_wait(30)
+        # cls.dr.implicitly_wait(30)
         return cls.dr
 
     @classmethod
