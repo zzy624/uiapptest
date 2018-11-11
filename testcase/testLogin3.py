@@ -1,16 +1,16 @@
 # -*-coding:utf-8-*-
 
-from uiapptest.app import mytest
+from app import mytest
 import unittest
-from uiapptest.app.element import Element
+# from app.element import Element
 
-class TestLogin(mytest.Myunittest,Element):
+class TestLogin(mytest.Myunittest):
     """登录测试"""
 
     def test1(self):
         """第1步"""
         self.dr.find_element_by_id('com.cubic.autohome:id/owner_main_RadioButton').click()
-        self.InsertImg(self.dr,"第1步")
+        self.InsertImg(self.dr,u"第1步")
         # self.assertEqual(1,2,"不相等")
 
     def test2(self):

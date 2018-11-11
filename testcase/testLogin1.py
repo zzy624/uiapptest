@@ -6,7 +6,7 @@ import unittest
 class TestLogin(mytest.Myunittest):
     """登录测试"""
 
-    def test1(self):
+    def runTest(self):
         """登录"""
         self.dr.find_element_by_id('com.cubic.autohome:id/owner_main_RadioButton').click()
         self.dr.find_element_by_id('com.autohome.main.me:id/owner_guest_login').click()

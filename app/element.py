@@ -3,7 +3,7 @@ import os
 import time
 from fractions import Fraction
 from appium.webdriver.common.touch_action import TouchAction
-
+import driver
 
 class Element(object):
     def findById(self, driver, id):
@@ -13,17 +13,17 @@ class Element(object):
     def findByName(self, driver, name):
         return driver.find_element_by_android_uiautomator('new UiSelector().text("' + name + '")')
 
-    def findBycClass(self, driver, className):
+    def findByClass(self, driver, className):
         return driver.find_element_by_class_name(className)
 
     def findByIds(self, driver, id, index):
-        return driver.find_element_by_id(id)[index]
+        return driver.find_elements_by_id(id)[index]
 
     def findByNames(self, driver, name, index):
-        return driver.find_element_by_android_uiautomator('new UiSelector().text("' + name + '")')[index]
+        return driver.find_elements_by_android_uiautomator('new UiSelector().text("' + name + '")')[index]
 
-    def findBycClasses(self, driver, className, index):
-        return driver.find_element_by_class_name(className)[index]
+    def findByClasses(self, driver, className, index):
+        return driver.find_elements_by_class_name(className)[index]
 
     def InsertImg(self, driver, file_name):
         file_path = os.path.dirname(__file__).split('/app')[0] + '/data/image/' + file_name + '.png'
@@ -54,8 +54,8 @@ class Element(object):
         tag_x = tag_value[0]
         tag_y = tag_value[1]
         #分辨率换算
-        ratioX = float("%.2f" % (float(1080) / float(1080)))
-        ratioY = float("%.2f" % (float(1920) / float(1920)))
+        ratioX = float("%.2f" % (float(1080) / float(320)))
+        ratioY = float("%.2f" % (float(1920) / float(760)))
         #换算后的坐标
         start_x = float("%.2f" % (float(tag_x) / ratioX))
         start_y = float("%.2f" % (float(tag_y) / ratioY))
@@ -129,3 +129,7 @@ class Element(object):
         else:
             return False
 
+if __name__ == '__main__':
+    E = Element()
+    dr = driver.Driver()
+    E.InsertImg(dr,"name")

@@ -1,7 +1,7 @@
 # -*-coding:utf-8-*-
 
-from uiapptest.app import util
-from uiapptest.app.element import Element
+from app import util
+from app.element import Element
 import time
 import re
 
@@ -42,7 +42,7 @@ class Testcase(Element):
         """执行测试用例"""
         #-------------------------------------执行测试用例---------------------------------------
         print('==========开始执行测试用例' + self.case_id + '===========')
-        if self.action in ['click','sendkey','swipe','swipe2','back','tag','sleep','back']:
+        if self.action in ['click','sendkey','swipe','swipe2','back','tag','sleep']:
             # 获取页面元素
             try:
                 if self.path_type == 'id':
@@ -50,7 +50,7 @@ class Testcase(Element):
                 if self.path_type == 'name':
                     element = self.findByName(self.driver,self.path_value)
                 if self.path_type == 'class':
-                    element = self.findBycClass(self.driver,self.path_value)
+                    element = self.findByClass(self.driver,self.path_value)
             except BaseException as e:
                 print(e)
                 raise ValueError('元素定位失败')
@@ -58,8 +58,12 @@ class Testcase(Element):
             if self.action == 'click':
                 element.click()
             elif self.action == 'sendkey':
+                try:
+                    self.driver.hide_keyboard()
+                except BaseException as e:
+                    pass
                 element.clear()
-                element.send_keys(self.value)
+                element.send_keys(str(self.value))
             elif self.action == 'swipe2':
                 start_x = self.value.split(',')[0]
                 start_y = self.value.split(',')[1]
@@ -110,7 +114,7 @@ class Testcase(Element):
                 except BaseException:
 
                     print('预期页面中不存在<' + expected + '>元素')
-                    self.InsertImg(self.case_name)
+                    self.InsertImg(self.driver,self.case_name)
                     self.log(actual_value=u'实际页面中不存在:<' + expected+ '>', results_value='fail')
                     print('==========测试用执行完成' + self.case_id + '===========\n\r')
                     msg = '预期界面中不存在<' + expected + '>元素'
@@ -120,7 +124,7 @@ class Testcase(Element):
                 print('预期界面中存在<'+expectedlist+'>activity')
             else:
                 print('预期界面中不存在<'+expectedlist+'>activity')
-                self.InsertImg(self.case_name)
+                self.InsertImg(self.driver,self.case_name)
                 self.log(actual_value=u'预期页面元素显示不正常', results_value='fail')
                 print('==========测试用执行完成' + self.case_id + '===========\n\r')
                 msg = '预期界面中不存在<'+self.expected+'>activity'

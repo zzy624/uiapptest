@@ -1,8 +1,8 @@
 # -*-coding:utf-8-*-
 
-from uiapptest.app import mytest
+from app import mytest
 import unittest
-from uiapptest.app.element import Element
+from app.element import Element
 
 
 class TestLogin(mytest.Myunittest, Element):
@@ -30,6 +30,7 @@ class TestLogin(mytest.Myunittest, Element):
         """第5步"""
         self.findById(self.dr, 'com.autohome.main.me:id/owner_login_pwd_container').send_keys('qingchezhijia123')
 
+    @unittest.skipUnless(False,'跳过测试')
     def test6(self):
         """第6步"""
         self.findById(self.dr, 'com.autohome.main.me:id/owner_login_commit').click()

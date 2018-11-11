@@ -2,7 +2,7 @@
 
 import unittest
 import time
-from dirver import Driver
+from driver import Driver
 
 class Myunittest(unittest.TestCase):
 
@@ -17,7 +17,7 @@ class Myunittest(unittest.TestCase):
         time.sleep(2)
         cls.dr.quit()
 
-    # 每执行一个测试用例，就重启开启一次 appium Session（现象-重启app）
+    # # 每执行一个测试用例，就重启开启一次 appium Session（现象-重启app）
     # def setUp(self):
     #     self.dr = Driver()
     #     self.dr.implicitly_wait(30)

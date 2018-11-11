@@ -8,7 +8,7 @@ file_path = os.path.dirname(__file__).split('/app')[0] + '/data/xls/testcase.xls
 
 FUNC_TEMPLATE = '''@unittest.skipUnless({state},'state值为0,跳过测试')\ndef {func}(self):
         '{casename}'
-        Testcase(Driver(),{onecase},'{sheetname}').execute_case()
+        Testcase(self.dr,{onecase},'{sheetname}').execute_case()
         '''
 
 def getXlsTestCase(sheet_name):
@@ -50,7 +50,7 @@ def setResults(sheet_name, case_id, col, value):
     if col == 'actual':
         row = cell['row']
         col = int(cell['col']) - 1
-    if setXlsTestCase(sheet_index, row, col, value):
+    if setTestCaseForXls(sheet_index, row, col, value):
         print('{0} 测试结果写入表格成功!'.format(value))
         return True
     print('测试结果写入失败!')
@@ -104,7 +104,6 @@ def setXlsTestCase(sheet_index, row, col, value):
         print (e)
         return False
 
-
 # 不更改原有样式
 def setTestCaseForXls(sheet_index, row, col, value):
     # if "Windows" in platform.platform():
@@ -144,9 +143,9 @@ def setTestCaseForXls(sheet_index, row, col, value):
 
 if __name__ == '__main__':
     data = getXlsTestCase('login_test')
-    print(data[0]['results'])
-    # for i in data:
-    #     print(i)
-        # print(json.dumps(i, encoding='UTF-8', ensure_ascii=False))
+    # print(data)
+    for i in data:
+        # print i['actual']
+        print(json.dumps(i, encoding='UTF-8', ensure_ascii=False))
 
     setResults('login_test','test1_Login_01','results','Nss')

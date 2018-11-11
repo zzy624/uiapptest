@@ -5,19 +5,18 @@ import time
 def Driver():
     desired_caps = {'platformName': 'Android',
                     'platformVersion': '4.4.2',
-                    'deviceName': '192.168.31.171:5555',
+                    'deviceName': 'test',
                     'appPackage': 'com.cubic.autohome',
                     'appActivity': '.LogoActivity',
                     'unicodeKeyboard': True,
                     'resetKeyboard': True,
                     'noReset': False,
-                    # 'newCommandTimeout': 100
                     }
 
-    driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
-    driver.implicitly_wait(100)
+    dr = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
+    dr.implicitly_wait(30)
 
-    return driver
+    return dr
 
 if __name__ == '__main__':
     d = Driver()
