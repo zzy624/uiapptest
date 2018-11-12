@@ -3,7 +3,6 @@ import os
 import time
 from fractions import Fraction
 from appium.webdriver.common.touch_action import TouchAction
-import driver
 
 class Element(object):
     def findById(self, driver, id):
@@ -95,33 +94,61 @@ class Element(object):
         width = window_size.get("width")
         height = window_size.get("height")
         if direction == 'down':
-            i = Fraction(1) - Fraction(value)
+            x1 = width/2
+            y1 = 60
+            x2 = width/2
+            i = (Fraction(1) - Fraction(value))
+            if i == 0:
+                y2 = height-1
+            else:
+                y2 = width * i.numerator / i.denominator
             try:
-                driver.swipe(width / 2, height * 3 / 4, width / 2, height * i.numerator / i.denominator, during)
+                driver.swipe(x1,y1,x2,y2, during)
                 return True
             except Exception as e:
                 print(e)
                 return False
         elif direction == 'up':
-            i = Fraction(value)
+            x1 = width/2
+            y1 = height-1
+            x2 = width/2
+            i = (Fraction(1) - Fraction(value))
+            if i == 0:
+                y2 = 1
+            else:
+                y2 = width * i.numerator / i.denominator
             try:
-                driver.swipe(width / 2, height / 4, width / 2, height * i.numerator / i.denominator, during)
+                driver.swipe(x1,y1,x2,y2, during)
                 return True
             except Exception as e:
                 print(e)
                 return False
         elif direction == 'right':
-            i = Fraction(1, 4) + Fraction(value)
+            x1 = 1
+            y1 = height/2
+            y2 = height/2
+            i = (Fraction(1) - Fraction(value))
+            if i == 0:
+                y2 = width-1
+            else:
+                y2 = width * i.numerator / i.denominator
             try:
-                driver.swipe(width / 4, height / 2, width * i.numerator / i.denominator, height / 2, during)
+                driver.swipe(x1,y1,x2,y2, during)
                 return True
             except Exception as e:
                 print(e)
                 return False
         elif direction == 'left':
-            i = (Fraction(3, 4) - Fraction(value))
+            x1 = width-1
+            y1 = height/2
+            y2 = height/2
+            i = (Fraction(1) - Fraction(value))
+            if i == 0:
+                x2 = 1
+            else:
+                x2 = width * i.numerator / i.denominator
             try:
-                driver.swipe(width * 3 / 4, height / 2, width * i.numerator / i.denominator, height / 2, during)
+                driver.swipe(x1,y1,x2,y2, during)
                 return True
             except Exception as e:
                 print(e)
@@ -129,7 +156,3 @@ class Element(object):
         else:
             return False
 
-if __name__ == '__main__':
-    E = Element()
-    dr = driver.Driver()
-    E.InsertImg(dr,"name")

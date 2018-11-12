@@ -1,12 +1,14 @@
 # -*-coding:utf-8-*-
 
-from app import util
-from app.element import Element
+from uiapptest.app import util
+from uiapptest.app.element import Element
 import time
 import re
 
+
 class Testcase(Element):
     """测试用例基础类"""
+
     def __init__(self,driver,testcase,testname):
         self.driver = driver
         self.testcase = testcase
@@ -30,17 +32,17 @@ class Testcase(Element):
             return expected_value
 
     def log(self,actual_value,results_value):
-        #实际结果和执行情况写入表格,记录日志
-        actual = util.setResults(self.testname, self.case_id, 'actual', actual_value)
-        results = util.setResults(self.testname, self.case_id, 'results', results_value)
+        # 实际结果和执行情况写入表格,记录日志
+        actual = util.setResults(self.testname,self.case_id,'actual',actual_value)
+        results = util.setResults(self.testname,self.case_id,'results',results_value)
         if actual and results:
-            print('测试结果写入完成!<' + self.case_id + ':'+ results_value+'>')
+            print('测试结果写入完成!<' + self.case_id + ':' + results_value + '>')
         else:
             print('测试结果写入失败')
 
     def execute_case(self):
         """执行测试用例"""
-        #-------------------------------------执行测试用例---------------------------------------
+        # -------------------------------------执行测试用例---------------------------------------
         print('==========开始执行测试用例' + self.case_id + '===========')
         if self.action in ['click','sendkey','swipe','swipe2','back','tag','sleep']:
             # 获取页面元素
@@ -69,11 +71,11 @@ class Testcase(Element):
                 start_y = self.value.split(',')[1]
                 end_x = self.value.split(',')[2]
                 end_y = self.value.split(',')[3]
-                if not self.Swipe2(start_x,start_y,end_x,end_y):
+                if not self.Swipe2(self.driver,start_x,start_y,end_x,end_y):
                     print("滑动失败")
             elif self.action == 'swipe':
                 swipe_value = self.value.split(',')
-                if not self.Swipe(swipe_value[0], swipe_value[1]):
+                if not self.Swipe(self.driver,swipe_value[0],swipe_value[1]):
                     print("滑动失败")
             elif self.action == 'tag':
                 if self.Tag(self.driver,self.value):
@@ -94,7 +96,7 @@ class Testcase(Element):
 
         # 如果预期结果为空，不进行判断操作
         if self.expected == '':
-            self.log(actual_value=u'预期页面显示正常', results_value='pass')
+            self.log(actual_value = u'预期页面显示正常',results_value = 'pass')
             # self.InsertImg(self.case_name)
             print('==========测试用执行完成' + self.case_id + '===========\n\r')
         else:
@@ -103,32 +105,32 @@ class Testcase(Element):
     # 结果比较
     def compare_result(self):
         expectedlist = self.get_expected(self.expected)
-        #判断预期页面是字符或者是activity
-        if isinstance(expectedlist, list):
+        # 判断预期页面是字符或者是activity
+        if isinstance(expectedlist,list):
             for expected in expectedlist:
                 # 查找预期页面元素
                 try:
                     self.driver.find_element_by_android_uiautomator('new UiSelector().textContains("' + expected + '")')
-                    print('预期页面中存在<' + expected +'>元素')
+                    print('预期页面中存在<' + expected + '>元素')
                     # expect = True
                 except BaseException:
 
                     print('预期页面中不存在<' + expected + '>元素')
                     self.InsertImg(self.driver,self.case_name)
-                    self.log(actual_value=u'实际页面中不存在:<' + expected+ '>', results_value='fail')
+                    self.log(actual_value = u'实际页面中不存在:<' + expected + '>',results_value = 'fail')
                     print('==========测试用执行完成' + self.case_id + '===========\n\r')
                     msg = '预期界面中不存在<' + expected + '>元素'
-                    assert False, msg
+                    assert False,msg
         else:
             if self.driver.current_activity == expectedlist:
-                print('预期界面中存在<'+expectedlist+'>activity')
+                print('预期界面中存在<' + expectedlist + '>activity')
             else:
-                print('预期界面中不存在<'+expectedlist+'>activity')
+                print('预期界面中不存在<' + expectedlist + '>activity')
                 self.InsertImg(self.driver,self.case_name)
-                self.log(actual_value=u'预期页面元素显示不正常', results_value='fail')
+                self.log(actual_value = u'预期页面元素显示不正常',results_value = 'fail')
                 print('==========测试用执行完成' + self.case_id + '===========\n\r')
-                msg = '预期界面中不存在<'+self.expected+'>activity'
-                assert False, msg
+                msg = '预期界面中不存在<' + self.expected + '>activity'
+                assert False,msg
 
-        self.log(actual_value=u'预期页面显示正常', results_value='pass')
+        self.log(actual_value = u'预期页面显示正常',results_value = 'pass')
         print('==========测试用执行完成' + self.case_id + '===========\n\r')

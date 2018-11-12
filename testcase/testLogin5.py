@@ -1,9 +1,9 @@
 # -*-coding:utf-8-*-
 import sys,os
 sys.path.append(os.path.abspath('../..'))
-from app import util
-from app.mytest import Myunittest
-from app.testcase import Testcase
+from uiapptest.app import util
+from uiapptest.app.mytest import Myunittest
+from uiapptest.app.testcase import Testcase
 
 import unittest
 

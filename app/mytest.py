@@ -2,14 +2,14 @@
 
 import unittest
 import time
-from driver import Driver
+from uiapptest.app.driver import Driver
 
 class Myunittest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
         cls.dr = Driver()
-        # cls.dr.implicitly_wait(30)
+        cls.dr.implicitly_wait(30)
         return cls.dr
 
     @classmethod
